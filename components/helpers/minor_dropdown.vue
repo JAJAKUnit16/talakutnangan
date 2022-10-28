@@ -2,10 +2,12 @@
 	<IconButton
 		class="container"
 		icon-name="more_vert"
-		@focusout="close"
 		@icon-click="open">
 		<template #associated-pop-outs>
-			<div v-if="modelValue" class="overlay"></div>
+			<div
+				v-if="modelValue"
+				class="overlay"
+				@click="close"></div>
 			<div v-if="modelValue" class="dropdown-container">
 				<slot name="dropdown-contents"></slot>
 			</div>
