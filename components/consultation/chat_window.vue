@@ -57,6 +57,9 @@
 							v-model="actionTaken"
 							class="action-taken-field"
 							type="text"/>
+						<ReceivedErrors
+							v-if="receivedErrors.length"
+							:received-errors="receivedErrors"/>
 					</template>
 
 					<template #footer>
@@ -171,6 +174,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, inject } from "vue"
 
+import type { UnitError } from "$/types/server"
 import type { PageContext } from "$/types/renderer"
 import type { FullTime } from "$@/types/independent"
 import type { DeserializedChatMessageListDocument } from "$/types/documents/chat_message"
@@ -179,6 +183,7 @@ import type {
 	DeserializedConsultationResource
 } from "$/types/documents/consultation"
 
+
 import makeSwitch from "$@/helpers/make_switch"
 import ConsultationFetcher from "$@/fetchers/consultation"
 import ConsultationTimerManager from "$@/helpers/consultation_timer_manager"
@@ -186,6 +191,7 @@ import convertMStoTimeObject from "$@/helpers/convert_milliseconds_to_full_time_
 
 import Overlay from "@/helpers/overlay.vue"
 
+import ReceivedErrors from "@/helpers/received_errors.vue"
 import NonSensitiveTextField from "@/fields/non-sensitive_text.vue"
 import FileOverlay from "@/consultation/chat_window/file_overlay.vue"
 import ExtraControls from "@/consultation/chat_window/extra_controls.vue"
@@ -268,7 +274,10 @@ const {
 } = makeSwitch(false)
 const actionTaken = ref("")
 
+
 const fileRepoTab = ref("files")
+const receivedErrors = ref<string[]>([])
+
 const mustShowPreview = computed(() => fileRepoTab.value === "pictures")
 function switchTab(event: Event) {
 	const button = event.target as HTMLButtonElement
@@ -337,9 +346,21 @@ function finishConsultation(): void {
 		.then(() => {
 			remainingMilliseconds.value = 0
 			emit("updatedConsultationAttributes", deserializedConsultationData)
+		}).catch(({ body }) => {
+			if (body) {
+				const { errors } = body
+				receivedErrors.value = errors.map((error: UnitError) => {
+					const readableDetail = error.detail
+
+					return readableDetail
+				})
+			} else {
+				receivedErrors.value = [ "an error occured" ]
+			}
 		})
 	}
 }
+
 
 function registerListeners(resource: DeserializedConsultationResource): void {
 	ConsultationTimerManager.listenConsultationTimeEvent(resource, "finish", finishConsultation)
@@ -404,6 +425,7 @@ function startConsultation() {
 		emit("updatedConsultationAttributes", deserializedConsultationData)
 	})
 }
+
 
 const startWatcher = watch(consultation, (newConsultation, oldConsultation) => {
 	if (oldConsultation.startedAt === null && newConsultation.startedAt instanceof Date) {

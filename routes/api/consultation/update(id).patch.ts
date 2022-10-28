@@ -87,12 +87,17 @@ export default class extends DoubleBoundJSONController {
 										"minimum": 10
 									}
 								},
+								"friendlyName": "action taken",
 								"pipes": [ required, string, length ]
 							},
-							pureNull
+							{
+								...pureNull,
+								"friendlyName": "action taken"
+							}
 						]
 					}
 				},
+				"friendlyName": "action taken",
 				"pipes": [ or ]
 			},
 			"finishedAt": {
