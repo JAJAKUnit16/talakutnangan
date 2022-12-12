@@ -264,7 +264,7 @@ const departments = ref<DeserializedDepartmentListDocument>(
 const userDepartment = ref(user.value.data.department.data.id as string)
 const selectableDepartments = computed(() => departments.value.data.map(
 	department => ({
-		"label": department.fullName,
+		"label": department.acronym,
 		"value": department.id
 	})
 ))
