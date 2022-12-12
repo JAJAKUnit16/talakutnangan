@@ -100,7 +100,7 @@ const selectedIDs = ref<string[]>([])
 
 const { userProfile } = pageProps
 
-const headers = [ "Name", "no. of users" ]
+const headers = [ "Name", "No. of users" ]
 const list = ref<DeserializedRoleListDocument>(
 	pageProps.roles as DeserializedRoleListDocument)
 
