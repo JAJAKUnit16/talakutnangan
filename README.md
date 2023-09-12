@@ -2,7 +2,7 @@
 A capstone project aim to create a consultation chat platform for MCC.
 
 ## Publication Notes
-Initially, this repository was developed from lemredd/talakutnangan. For better collaboration
+Initially, this repository was developed from [lemredd/talakutnangan](https://github.com/lemredd/talakutnangan). For better collaboration
 experience among capstone members, the development was resumed in this repository.
 
 This repository is only for educational purposes. Most commits from the authors are signed with
