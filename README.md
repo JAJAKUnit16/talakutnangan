@@ -1,6 +1,14 @@
 # Talakutnangan
 A capstone project aim to create a consultation chat platform for MCC.
 
+## Publication Notes
+Initially, this repository was developed from [lemredd/talakutnangan](https://github.com/lemredd/talakutnangan). For better collaboration
+experience among capstone members, the development was resumed in this repository.
+
+This repository is only for educational purposes. Most commits from the authors are signed with
+GPG keys for proof of integrity. The authors permit resumption of the development history in hopes
+to improve the current state of the system.
+
 ## Keywords
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT",
 "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
